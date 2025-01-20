@@ -3,23 +3,20 @@ const express = require('express');
 const app = express();
 const port = process.env.BACK_END_PORT || 3000;
 const { db } = require('./db_config/config');
-
 const logger = require('morgan');
+
+const router = require('./routes');
+
+
 app.use(logger('dev'));
+app.use(express.json());
+
+
+app.use('/api',router);
+
 
 app.get('/', async (req, res) => {
-  //res.setHeader('content-type', 'text/plain');
- try {
-    const userDoc = await db.collection('users').doc(process.env.TEST_USER_ID).get();
-    if (userDoc.exists) {
-      res.status(200).json(userDoc.data());
-    } else {
-      res.status(404).send('User not found');
-    }
-  } catch (error) {
-    console.error('Server error:', error);
-    res.status(500).send('Internal server error');
-  }
+  res.status(200).json(userDoc.data());
 });
 
 app.listen(port, () => {
