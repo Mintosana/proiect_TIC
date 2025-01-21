@@ -4,10 +4,14 @@ const app = express();
 const port = process.env.BACK_END_PORT || 3000;
 const { db } = require('./db_config/config');
 const logger = require('morgan');
+const cookieParser = require('cookie-parser');
 
 const router = require('./routes');
 
 
+
+
+app.use(cookieParser());
 app.use(logger('dev'));
 app.use(express.json());
 
