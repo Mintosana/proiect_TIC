@@ -73,6 +73,7 @@ const createUser = async (req, res) => {
     // }
 
     userData.isAdmin = 0;
+    userData.createdAt = new Date().toISOString();
     userData.password = await bcrypt.hash(userData.password, 10);
     console.log(userData);
 
@@ -129,7 +130,7 @@ const logoutUser = (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+const updateUserById = async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body;
   try {
@@ -168,7 +169,7 @@ module.exports = {
   createUser,
   loginUser,
   logoutUser,
-  updateUser,
+  updateUserById,
   deleteUser,
   
 };
