@@ -33,7 +33,7 @@ const getUserById = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const userData = req.body;
-
+    console.log(userData, "  ", "caca");
     const missingFields = [];
     if (!userData.username) missingFields.push("username");
     if (!userData.email) missingFields.push("email");
@@ -88,6 +88,9 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const user = req.body;
+    if(!user.email || !user.password){
+      return res.status(401).send('No data has been sent, please fill in the login form');
+    }
     const userSnap = await db.collection('users').where('email', '==', user.email).get();
     // console.log(userSnap);
     if (userSnap.empty) {
