@@ -1,4 +1,7 @@
 import LoginView from '@/views/LoginView.vue'
+import HomepageView from '@/views/HomepageView.vue'
+import profileView from '@/views/profileView.vue'
+import giveAdoptView from '@/views/giveAdoptView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -7,6 +10,22 @@ const routes = [
     name: 'auth',
     component: LoginView,
   },
+  {
+    path: '/homepage',
+    name: 'homePage',
+    component: HomepageView,
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: profileView,
+  },
+  {
+    path: '/giveAdopt',
+    name: 'giveAdopt',
+    component: giveAdoptView,
+  },
+
 ]
 
 const router = createRouter({
