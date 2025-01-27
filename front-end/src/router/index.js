@@ -1,7 +1,8 @@
 import LoginView from '@/views/LoginView.vue'
 import HomepageView from '@/views/HomepageView.vue'
 import profileView from '@/views/profileView.vue'
-import giveAdoptView from '@/views/giveAdoptView.vue'
+// import giveAdoptView from '@/views/giveAdoptView.vue'
+import BirdPage from '@/views/BirdPage.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -21,10 +22,10 @@ const routes = [
     component: profileView,
   },
   {
-    path: '/giveAdopt',
-    name: 'giveAdopt',
-    component: giveAdoptView,
-  },
+    path: '/bird/:id',
+    name: 'BirdPage',
+    component: BirdPage,
+  }
 
 ]
 

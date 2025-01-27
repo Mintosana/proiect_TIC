@@ -1,4 +1,5 @@
 const { db } = require('../db_config/config');
+const { faker } = require('@faker-js/faker');
 
 const getAllBirds = async (req, res) => {
     try {
@@ -105,10 +106,71 @@ const deleteBirdById = async (req, res) => {
     }
 };
 
+const deleteAllBirds = async (req, res) => {
+    try {
+        const snapshot = await db.collection('birds').get();
+        if (snapshot.empty) {
+            return res.status(200).send('No birds to delete.');
+        }
+        const batch = db.batch();
+        snapshot.forEach((doc) => {
+            batch.delete(doc.ref);
+        });
+
+        await batch.commit();
+        res.status(200).send('All birds have been removed successfully!');
+    } catch (error) {
+        console.error('Error deleting all birds:', error);
+        res.status(500).send('Internal server error');
+    }
+};
+
+const generateDummyBirds = async (req, res) => {
+
+    try {
+        const birds = [];
+        const birdImages = [
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Cockatielmale.jpg/300px-Cockatielmale.jpg',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Cacatua_galerita_Tas_2.jpg/300px-Cacatua_galerita_Tas_2.jpg',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Trinidad_and_Tobago_hummingbirds_composite.jpg/300px-Trinidad_and_Tobago_hummingbirds_composite.jpg',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Geotrygon_montana_-_Ruddy_Quail-Dove%2C_Trememb%C3%A9%2C_S%C3%A3o_Paulo%2C_Brazil.jpg/300px-Geotrygon_montana_-_Ruddy_Quail-Dove%2C_Trememb%C3%A9%2C_S%C3%A3o_Paulo%2C_Brazil.jpg',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Corvus_corone_-near_Canford_Cliffs%2C_Poole%2C_England-8.jpg/300px-Corvus_corone_-near_Canford_Cliffs%2C_Poole%2C_England-8.jpg',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Male_and_female_chicken_sitting_together.jpg/300px-Male_and_female_chicken_sitting_together.jpg',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Poecile_hudsonicus_7.jpg/300px-Poecile_hudsonicus_7.jpg',
+          ];
+        for (let i = 0; i < 8; i++) {
+            birds.push({
+                name: faker.person.firstName(),
+                photo: faker.helpers.arrayElement(birdImages),
+                species: faker.animal.bird(),
+                age: faker.number.int({ min: 1, max: 10 }),
+                price: faker.commerce.price(20, 500, 0),
+                description: faker.commerce.productDescription(),
+            });
+        }
+        // console.log(birds)
+        for(let i=0; i<birds.length;i++){
+            await db.collection("birds").add(birds[i]);
+        }
+        
+        res.status(201).send("Birds have flown into our center!")
+    }
+    catch(err) {
+        res.status(500).send(`Server error occured : ${err}`)
+    }
+
+    
+}
+
+
+
 module.exports = {
     getAllBirds,
     getBirdById,
     createBird,
     updateBirdById,
     deleteBirdById,
+    deleteAllBirds,
+    generateDummyBirds,
+
 };
