@@ -10,7 +10,7 @@ const cors = require("cors");
 const router = require('./routes');
 
 app.use(cors({
-  origin: "http://localhost:8081",
+  origin: "*",
   methods: "GET,POST,PUT,DELETE",
   credentials:true,
 }));

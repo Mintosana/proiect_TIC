@@ -1,11 +1,11 @@
 const express = require('express');
 const { userController } = require('../controllers');
-const authenticateToken = require('../middleware/jwt');
+const {authenticateToken, authenticateTokenAdmin} = require('../middleware/jwt');
 
 const router = express.Router();
 
 //TESTING PT JWT
-router.get('/getAllUsers', authenticateToken, userController.getAllUsers);
+router.get('/getAllUsers', authenticateTokenAdmin, userController.getAllUsers);
 
 router.get('/getUserById/:id', userController.getUserById);
 router.post('/loginUser',userController.loginUser);

@@ -37,7 +37,6 @@ const createBird = async (req, res) => {
         if (!birdData.species) missingFields.push("species");
         if (!birdData.age) missingFields.push("age");
         if (!birdData.description) missingFields.push("description");
-        if (!birdData.ownerId) missingFields.push("ownerId");
 
         if (missingFields.length > 0) {
             return res.status(400).json({
@@ -51,10 +50,6 @@ const createBird = async (req, res) => {
         birdData.age = Number(birdData.age);
         if (isNaN(birdData.age) || birdData.age <= 0) {
             return res.status(400).json({ error: "Bird age must be a positive number." });
-        }
-        const ownerDoc = await db.collection('users').doc(birdData.ownerId).get();
-        if (!ownerDoc.exists) {
-            return res.status(400).json({ error: "Invalid ownerId. The specified user does not exist." });
         }
 
         birdData.status = birdData.status || "available";

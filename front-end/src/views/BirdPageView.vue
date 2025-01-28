@@ -13,6 +13,7 @@
 <script>
 import HeaderComponent from "../components/general/HeaderComponent.vue";
 import BirdInfo from "@/components/birdPage/BirdInfo.vue";
+import axios from 'axios';
 
 export default {
     components: {
@@ -27,11 +28,10 @@ export default {
     async created() {
         const birdId = this.$route.params.id;
         try {
-            const res = await fetch(
-                `${process.env.VUE_APP_BACK_END_HOST}/api/birds/getBirdById/${birdId}`
-            );
-            if (!res.ok) throw new Error("Failed to fetch bird details");
-            this.bird = await res.json();
+            const res = await axios.get(`${process.env.VUE_APP_BACK_END_HOST}/api/birds/getBirdById/${birdId}`);
+            // console.log(res);
+            if (res.status != 200) throw new Error("Failed to fetch bird details");
+            this.bird = res.data;
         } catch (error) {
             console.error(error);
         }

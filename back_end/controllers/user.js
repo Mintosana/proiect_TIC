@@ -110,7 +110,11 @@ const loginUser = async (req, res) => {
         httpOnly: true,
         maxAge: 3600000,
       });
-      res.status(200).json({ message: `Login successful, welcome ${userData.username}! - ${userId}` });
+      res.status(200).json({ 
+        message: `Login successful, welcome ${userData.username}! - ${userId}`,
+        userId,
+        token,
+      });
     } else {
       res.status(401).send('Invalid credentials');
     }

@@ -11,6 +11,7 @@
 import BirdList from '@/components/homepage/BirdList.vue';
 import HeaderComponent from '../components/general/HeaderComponent.vue';
 import axios from 'axios';
+
 export default {
   components: {
     HeaderComponent,
