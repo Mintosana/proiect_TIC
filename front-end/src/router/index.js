@@ -1,6 +1,6 @@
 import LoginView from '@/views/LoginView.vue'
 import HomepageView from '@/views/HomepageView.vue'
-import profileView from '@/views/profileView.vue'
+import profileView from '@/views/ProfileView.vue'
 import AddBird from '@/views/AddBirdView.vue'
 import BirdPage from '@/views/BirdPageView.vue'
 import { createRouter, createWebHistory } from 'vue-router'

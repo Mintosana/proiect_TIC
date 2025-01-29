@@ -52,7 +52,7 @@ const createBird = async (req, res) => {
             return res.status(400).json({ error: "Bird age must be a positive number." });
         }
 
-        birdData.status = birdData.status || "available";
+        birdData.status = "available";
         birdData.createdAt = new Date().toISOString();
 
         const newBirdRef = await db.collection('birds').add(birdData);
@@ -120,6 +120,29 @@ const deleteAllBirds = async (req, res) => {
     }
 };
 
+const updateBirdBuyStateById = async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    try {
+        const birdRef = db.collection('birds').doc(id);
+        const birdDoc = await birdRef.get();
+
+        if (!birdDoc.exists) {
+            return res.status(404).json({ error: 'Bird not found' });
+        }
+        const birdData = birdDoc.data();
+        if (birdData.buyState !== "available") {
+            return res.status(400).json({ error: "Bird is not available for purchase." });
+        }
+
+        await birdRef.update({ buyState: "pending" });
+        res.status(200).json({ message: "Bird has been reserved, waiting for confirmation!", id });
+    } catch (error) {
+        console.error('Something happened when reserving bird:', error);
+        res.status(500).send('Internal server error');
+    }
+};
+
 const generateDummyBirds = async (req, res) => {
 
     try {
@@ -141,6 +164,7 @@ const generateDummyBirds = async (req, res) => {
                 age: faker.number.int({ min: 1, max: 10 }),
                 price: faker.commerce.price(20, 500, 0),
                 description: faker.commerce.productDescription(),
+                buyState: "available",
             });
         }
         // console.log(birds)
@@ -150,8 +174,8 @@ const generateDummyBirds = async (req, res) => {
         
         res.status(201).send("Birds have flown into our center!")
     }
-    catch(err) {
-        res.status(500).send(`Server error occured : ${err}`)
+    catch(error) {
+        res.status(500).send(`Server error occured : ${error}`)
     }
 
     
@@ -167,5 +191,6 @@ module.exports = {
     deleteBirdById,
     deleteAllBirds,
     generateDummyBirds,
+    updateBirdBuyStateById,
 
 };

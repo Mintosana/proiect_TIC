@@ -34,13 +34,22 @@
   </template>
   
   <script>
+  import axios from 'axios';
   export default {
     props: {
       bird: Object,
     },
     methods: {
-      buyBird() {
+      async buyBird() {
         console.log(`You bought the bird: ${this.bird.name}`);
+        const res1 = await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/birds/updateBirdBuyStateById/${this.$route.params.id}`)
+        console.log(res1);
+        const res2 = await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/users/reserveBirdForUser`,{
+
+          userId:this.$store.state.userId,
+          birdId:this.$route.params.id,
+        })
+        console.log(res2);
       },
     },
   };

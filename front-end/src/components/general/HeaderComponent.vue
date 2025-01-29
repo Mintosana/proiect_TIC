@@ -42,12 +42,12 @@ export default {
     },
     async setIsAdmin() {
       try {
-        const response = await axios.get(`http://localhost:8080/api/users/getUserById/${this.$store.state.userId}`);
-        console.log(response);
+        const response = await axios.get(`${process.env.VUE_APP_BACK_END_HOST}/api/users/checkAdminStatus/${this.$store.state.userId}`);
+        //console.log(response);
         if (response.status === 200) {
-         this.isAdmin = response.data.isAdmin;
+         this.isAdmin = response.data;
         } else {
-          console.error("Failes to fetch user:", response.status);
+          console.error("Failed to fetch user:", response.status);
         }
       } catch (error) {
         console.error("Error while fetching user:", error);
@@ -55,8 +55,8 @@ export default {
     },
   },
   created(){
-    this.setIsAdmin()
-  }
+    this.setIsAdmin();
+  },
 };
 </script>
 

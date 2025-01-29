@@ -130,7 +130,7 @@ const logoutUser = (req, res) => {
       httpOnly: true,
       maxAge: 0,
     });
-    res.status(200).json({ message: 'Logout successful, cookie removed.' });
+    res.status(200).json({ message: 'Logout successful' });
   } catch (error) {
     console.error('Error during logout:', error);
     res.status(500).send('Internal server error');
@@ -153,6 +153,56 @@ const updateUserById = async (req, res) => {
     res.status(500).send('Internal server error');
   }
 };
+
+const reserveBirdForUser = async (req, res) => {
+  const { userId, birdId } = req.body;
+
+  if (!userId || !birdId) {
+      return res.status(400).json({ error: "User ID and Bird ID are required." });
+  }
+
+  try {
+      const userRef = db.collection('users').doc(userId);
+      const userDoc = await userRef.get();
+
+      if (!userDoc.exists) {
+          return res.status(404).json({ error: "User not found." });
+      }
+
+      const userData = userDoc.data();
+      const pendingBirds = userData.PendingBirds || [];
+
+      if (pendingBirds.includes(birdId)) {
+          return res.status(400).json({ error: "Bird is already reserved by this user." });
+      }
+
+      pendingBirds.push(birdId);
+      await userRef.update({ PendingBirds: pendingBirds });
+
+      res.status(200).json({ message: "Bird reserved successfully.", PendingBirds: pendingBirds });
+  } catch (error) {
+      console.error("Error reserving bird:", error);
+      res.status(500).send("Internal server error");
+  }
+};
+
+const checkAdminStatus = async (req,res) => {
+  const { id } = req.params;
+  try{
+    const userRef = db.collection('users').doc(id);
+    const userDoc = await userRef.get();
+    if (!userDoc.exists) {
+      return res.status(404).send('User not found');
+    }
+    const isAdmin = userDoc.data().isAdmin;
+    console.log(isAdmin);
+    res.status(200).json(isAdmin);
+  }catch(error){
+    console.error('Error for getting admin status:', error);
+    res.status(500).send('Internal server error');
+  }
+
+}
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
@@ -177,6 +227,8 @@ module.exports = {
   loginUser,
   logoutUser,
   updateUserById,
+  reserveBirdForUser,
+  checkAdminStatus,
   deleteUser,
   
 };
