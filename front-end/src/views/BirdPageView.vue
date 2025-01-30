@@ -51,6 +51,6 @@ export default {
             rgba(201, 102, 95, 1) 34%,
             rgba(200, 218, 49, 1) 66%,
             rgba(74, 255, 0, 1) 100%);
-    min-height: 100vh;
+    min-height: 100%;
 }
 </style>

@@ -186,6 +186,54 @@ const reserveBirdForUser = async (req, res) => {
   }
 };
 
+const boughtBirdForUser = async (req, res) => {
+  const { userId, birdId } = req.body;
+
+  if (!userId || !birdId) {
+    return res.status(400).json({ error: "User ID and Bird ID are required." });
+  }
+
+  try {
+    const userRef = db.collection("users").doc(userId);
+    const birdRef = db.collection("birds").doc(birdId);
+
+    const userDoc = await userRef.get();
+    const birdDoc = await birdRef.get();
+
+    if (!userDoc.exists) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    if (!birdDoc.exists) {
+      return res.status(404).json({ error: "Bird not found." });
+    }
+
+    const userData = userDoc.data();
+    const pendingBirds = userData.PendingBirds || [];
+    const boughtBirds = userData.BoughtBirds || [];
+    if (boughtBirds.includes(birdId)) {
+      return res.status(400).json({ error: "Bird is already bought by this user." });
+    }
+    const updatedPendingBirds = pendingBirds.filter((id) => id !== birdId);
+    boughtBirds.push(birdId);
+
+    await userRef.update({
+      PendingBirds: updatedPendingBirds,
+      BoughtBirds: boughtBirds,
+    });
+
+    await birdRef.update({
+      buyState: "bought",
+    });
+    
+    res.status(200).json({message: "Bird bought successfully."});
+
+  } catch (error) {
+    console.error("Error buying bird:", error);
+    res.status(500).send("Internal server error");
+  }
+};
+
+
 const checkAdminStatus = async (req,res) => {
   const { id } = req.params;
   try{
@@ -228,6 +276,7 @@ module.exports = {
   logoutUser,
   updateUserById,
   reserveBirdForUser,
+  boughtBirdForUser,
   checkAdminStatus,
   deleteUser,
   

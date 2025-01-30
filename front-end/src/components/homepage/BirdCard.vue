@@ -28,9 +28,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .bird-card {
-  width: 300px;
+  height:100%;
+  max-width: 20rem;
   border: 1px solid #ddd;
   border-radius: 12px;
   overflow: hidden;
@@ -39,13 +40,15 @@ export default {
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin: 12px;
+  gap: 12px;
+  
 }
 
 .bird-photo {
   width: 100%;
   height: 200px;
-  object-fit: fill;
+  object-fit: cover;
+  object-position: top;
   background-color: #eaeaea;
 }
 

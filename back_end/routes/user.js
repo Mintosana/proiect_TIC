@@ -13,6 +13,7 @@ router.get('/logoutUser',userController.logoutUser);
 router.post('/createUser', userController.createUser);
 router.put('/updateUserById/:id', userController.updateUserById);
 router.put('/reserveBirdForUser', userController.reserveBirdForUser); 
+router.put('/boughtBirdForUser', userController.boughtBirdForUser); 
 router.delete('/deleteUserById/:id', userController.deleteUser);
 router.get('/checkAdminStatus/:id', userController.checkAdminStatus);
 

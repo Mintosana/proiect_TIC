@@ -6,6 +6,7 @@ const router = express.Router();
 
 
 router.get('/getAllBirds', authenticateToken,birdController.getAllBirds);
+router.get("/getBirdsWithPendingBuyState",birdController.getBirdsWithPendingBuyState);
 router.get('/getBirdById/:id', birdController.getBirdById);
 router.post('/createBird', birdController.createBird);
 router.post('/generateDummyBirds', birdController.generateDummyBirds);

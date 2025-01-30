@@ -1,36 +1,83 @@
 <template>
-   <v-row style="height: 7rem; width: 70%; background-color: grey">
-   <v-col class="d-flex align-center">
-      <img src="https://previews.123rf.com/images/victoroancea/victoroancea1201/victoroancea120100059/12055848-tv-color-test-pattern-test-card-for-pal-and-ntsc.jpg"  height="30" width="30"/>
-   </v-col>
-
-   <v-col class="d-flex flex-column justify-center" style="height: 100%; width: 90%; background: :#cecece">
-      <div class="name">Prod Name</div>
-      <div class="color">Blue</div>
-   </v-col> 
-
-   <v-col align-self="center">
-       $40
-   </v-col>
-</v-row>
-</template>
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          <h2 class="text-center">Favourite Birds</h2>
+        </v-col>
+      </v-row>
+  
+      <v-row>
+        <v-col v-for="bird in birds" :key="bird.id" cols="12" sm="6" md="4" lg="3">
+          <router-link :to="`/bird/${bird.id}`" class="text-decoration-none">
+            <v-card class="mx-auto" max-width="350" elevation="4">
+              <v-img :src="bird.photo" height="17rem" cover></v-img>
+              <v-card-title>{{ bird.name }}</v-card-title>
+              <v-card-subtitle>{{ bird.species }}</v-card-subtitle>
+              <v-card-text>
+                <p><strong>Age:</strong> {{ bird.age }} years</p>
+                <p><strong>Price:</strong> ${{ bird.price }}</p>
+                <p>{{ bird.description }}</p>
+              </v-card-text>
+            </v-card>
+          </router-link>
+        </v-col>
+      </v-row>
+    </v-container>
+  </template>
   
   <script>
   export default {
+    name: "BirdList",
     data() {
       return {
         birds: [
-          { name: 'Robin', age: 2, species: 'Eurasian Robin', price: '$10' },
-          { name: 'Parrot', age: 4, species: 'Macaw', price: '$200' },
-          { name: 'Canary', age: 1, species: 'Yellow Canary', price: '$15' },
-          { name: 'Eagle', age: 5, species: 'Bald Eagle', price: '$1500' },
+          {
+            id: 1,
+            name: "Parrot",
+            species: "Psittaciformes",
+            age: 2,
+            price: 50,
+            photo: "https://i.pinimg.com/474x/d0/d2/36/d0d236718ee188ca9c3c8999504d2250.jpg",
+            description: "A colorful and intelligent bird.",
+          },
+          {
+            id: 2,
+            name: "Canary",
+            species: "Serinus canaria",
+            age: 1,
+            price: 30,
+            photo: "https://i.pinimg.com/474x/d0/d2/36/d0d236718ee188ca9c3c8999504d2250.jpg",
+            description: "A small songbird known for its beautiful voice.",
+          },
+          {
+            id: 3,
+            name: "Finch",
+            species: "Fringillidae",
+            age: 3,
+            price: 20,
+            photo: "https://i.pinimg.com/474x/d0/d2/36/d0d236718ee188ca9c3c8999504d2250.jpg",
+            description: "A lively little bird perfect for beginners.",
+          },
+          {
+            id: 4,
+            name: "Sparrow",
+            species: "Passeridae",
+            age: 2,
+            price: 15,
+            photo: "https://i.pinimg.com/474x/d0/d2/36/d0d236718ee188ca9c3c8999504d2250.jpg",
+            description: "A small but energetic bird.",
+          },
         ],
       };
     },
   };
   </script>
   
-  <style>
-  
+  <style scoped>
+  .text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   </style>
   

@@ -13,6 +13,19 @@ const getAllBirds = async (req, res) => {
     }
 };
 
+const getBirdsWithPendingBuyState = async (req, res) => {
+    try {
+        const snapshot = await db.collection('birds').where('buyState', '==', 'pending').get();
+        const birds = [];
+        snapshot.forEach(doc => birds.push({ id: doc.id, ...doc.data() }));
+        res.status(200).json(birds);
+    } catch (error) {
+        console.error('Error fetching birds with pending buy state:', error);
+        res.status(500).send('Internal server error');
+    }
+};
+
+
 const getBirdById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -122,7 +135,8 @@ const deleteAllBirds = async (req, res) => {
 
 const updateBirdBuyStateById = async (req, res) => {
     const { id } = req.params;
-    console.log(id);
+    const userId = req.body.userId;
+    //console.log(id);
     try {
         const birdRef = db.collection('birds').doc(id);
         const birdDoc = await birdRef.get();
@@ -131,12 +145,17 @@ const updateBirdBuyStateById = async (req, res) => {
             return res.status(404).json({ error: 'Bird not found' });
         }
         const birdData = birdDoc.data();
+
         if (birdData.buyState !== "available") {
             return res.status(400).json({ error: "Bird is not available for purchase." });
         }
-
-        await birdRef.update({ buyState: "pending" });
-        res.status(200).json({ message: "Bird has been reserved, waiting for confirmation!", id });
+        else {
+            await birdRef.update({ 
+                buyState: "pending",
+                buyer: userId
+        })
+        res.status(200).json({ message: "Bird has been reserved!"});
+        }
     } catch (error) {
         console.error('Something happened when reserving bird:', error);
         res.status(500).send('Internal server error');
@@ -185,6 +204,7 @@ const generateDummyBirds = async (req, res) => {
 
 module.exports = {
     getAllBirds,
+    getBirdsWithPendingBuyState,
     getBirdById,
     createBird,
     updateBirdById,

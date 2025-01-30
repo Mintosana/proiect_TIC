@@ -42,10 +42,11 @@
     methods: {
       async buyBird() {
         console.log(`You bought the bird: ${this.bird.name}`);
-        const res1 = await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/birds/updateBirdBuyStateById/${this.$route.params.id}`)
+        const res1 = await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/birds/updateBirdBuyStateById/${this.$route.params.id}`,{
+          userId : this.$store.state.userId
+        })
         console.log(res1);
         const res2 = await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/users/reserveBirdForUser`,{
-
           userId:this.$store.state.userId,
           birdId:this.$route.params.id,
         })
@@ -59,8 +60,9 @@
   .bird-card {
     display: flex;
     flex-direction: row;
-    margin: 20px 0px;
-    max-width: 100%;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 70%;
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     background-color: white;
