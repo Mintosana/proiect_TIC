@@ -64,7 +64,6 @@ export default {
             ],
             emailRules: [
                 v => !!v || 'E-mail is required.',
-                // v => /.+@.+\..+/.test(v) || 'E-mail must be valid.',
                 v => /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim.test(v) || 'E-mail must be valid.',
 
             ],
@@ -94,6 +93,7 @@ export default {
                     //console.log("Login Success:", response);
                     this.$store.commit("setToken", response.data.token);
                     this.$store.commit("setUserId", response.data.userId);
+                    this.$store.commit("setAdmin", response.data.isAdmin);
                     this.$router.push('/homepage')
                 }
 
@@ -133,7 +133,6 @@ html {
 }
 
 .beautiful-colors {
-    background: rgb(23, 173, 162);
-    background: linear-gradient(142deg, rgba(23, 173, 162, 1) 0%, rgba(201, 102, 95, 1) 34%, rgba(200, 218, 49, 1) 66%, rgba(74, 255, 0, 1) 100%);
+    background: #03440C;
 }
 </style>

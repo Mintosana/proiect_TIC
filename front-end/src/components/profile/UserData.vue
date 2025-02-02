@@ -3,20 +3,22 @@
       <v-card class="profile-card">
         <div class="profile-content">
           <v-avatar size="150" class="profile-avatar">
-            <v-img src="https://randomuser.me/api/portraits/men/73.jpg"></v-img>
+            <v-img 
+            :src="user.profilePicture ? user.profilePicture : 'https://myrightbird.com/assets/uploads/mybird_sun_conure_on_perch.jpg'"
+          ></v-img>
           </v-avatar>
           <div class="profile-info">
             <div class="info-row">
               <span class="label">Username:</span>
-              <span class="value">caca</span>
+              <span class="value">{{ user.username }}</span>
             </div>
             <div class="info-row">
               <span class="label">Phone:</span>
-              <span class="value">123123</span>
+              <span class="value">{{ user.phoneNumber }}</span>
             </div>
             <div class="info-row">
               <span class="label">Email:</span>
-              <span class="value">email</span>
+              <span class="value">{{ user.email }}</span>
             </div>
           </div>
         </div>
@@ -79,6 +81,15 @@
     font-size: 1.5rem;
     flex-grow: 1;
     text-align: right;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .profile-content{
+      flex-direction: column;
+    }
+    .value{
+      font-size: 1rem;
+    }
   }
   </style>
   

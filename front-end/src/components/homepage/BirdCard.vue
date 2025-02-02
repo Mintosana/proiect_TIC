@@ -1,19 +1,21 @@
 <template>
-  <router-link :to="`/bird/${bird.id}`" class="bird-card-link">
-    <div class="bird-card">
-      <img :src="bird.photo" alt="Bird photo" class="bird-photo" />
-
-      <div class="bird-info">
+  <v-card class="bird-card">
+    <router-link :to="`/bird/${bird.id}`" class="bird-card-link">
+      <v-img :src="bird.photo" height="220" cover class="bird-photo"></v-img>
+      <v-card-text class="bird-info">
         <h3 class="bird-name">{{ bird.name }}</h3>
         <p class="bird-details">
-          <span><strong>Species:</strong> {{ bird.species }}</span><br />
-          <span><strong>Age:</strong> {{ bird.age }} years</span><br />
-          <span><strong>Price:</strong> ${{ bird.price }}</span>
+          <strong>Species:</strong> {{ bird.species }} <br />
+          <strong>Age:</strong> {{ bird.age }} years <br />
+          <strong>Price:</strong> ${{ bird.price }}
         </p>
-        <p class="bird-description">{{ bird.description }}</p>
-      </div>
-    </div>
-  </router-link>
+        <v-divider></v-divider>
+        <p class="bird-description">
+          {{ bird.description }}
+        </p>
+      </v-card-text>
+    </router-link>
+  </v-card>
 </template>
 
 <script>
@@ -28,60 +30,58 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .bird-card {
-  height:100%;
-  max-width: 20rem;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  overflow: hidden;
-  background-color: #fff;
-  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   text-align: center;
-  gap: 12px;
-  
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+  height: 420px;
 }
 
-.bird-photo {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  object-position: top;
-  background-color: #eaeaea;
-}
-
-.bird-info {
-  padding: 16px;
-}
-
-.bird-name {
-  font-size: 1.5em;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-.bird-details {
-  font-size: 0.9em;
-  color: #555;
-  margin-bottom: 12px;
-  line-height: 1.5;
-}
-
-.bird-description {
-  font-size: 0.85em;
-  color: #666;
-  margin-top: 12px;
+.bird-card:hover {
+  transform: scale(1.02);
 }
 
 .bird-card-link {
   text-decoration: none;
   color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.bird-card-link:hover .bird-card {
-  transform: scale(1.02);
-  transition: transform 0.2s ease;
+.bird-photo {
+  object-position: top;
+}
+
+.bird-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.bird-name {
+  font-size: 1.3em;
+  color: #333;
+}
+
+.bird-details {
+  font-size: 0.9em;
+  color: #555;
+  margin: 8px 0;
+}
+
+.bird-description {
+  font-size: 0.85em;
+  color: #666;
+  text-align: justify;
+  height: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

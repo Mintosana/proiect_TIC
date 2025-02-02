@@ -13,6 +13,18 @@ const getAllBirds = async (req, res) => {
     }
 };
 
+const getBirdsWithAvailableBuyState = async (req, res) => {
+    try {
+        const snapshot = await db.collection('birds').where('buyState', '==', 'available').get();
+        const birds = [];
+        snapshot.forEach(doc => birds.push({ id: doc.id, ...doc.data() }));
+        res.status(200).json(birds);
+    } catch (error) {
+        console.error('Error fetching birds:', error);
+        res.status(500).send('Internal server error');
+    }
+};
+
 const getBirdsWithPendingBuyState = async (req, res) => {
     try {
         const snapshot = await db.collection('birds').where('buyState', '==', 'pending').get();
@@ -65,11 +77,11 @@ const createBird = async (req, res) => {
             return res.status(400).json({ error: "Bird age must be a positive number." });
         }
 
-        birdData.status = "available";
+        birdData.buyState = "available";
         birdData.createdAt = new Date().toISOString();
 
         const newBirdRef = await db.collection('birds').add(birdData);
-        res.status(201).json({ id: newBirdRef.id, ...birdData });
+        res.status(201).json(birdData);
     } catch (error) {
         console.error('Error registering bird:', error);
         res.status(500).send('Internal server error');
@@ -158,12 +170,11 @@ const updateBirdBuyStateById = async (req, res) => {
         }
     } catch (error) {
         console.error('Something happened when reserving bird:', error);
-        res.status(500).send('Internal server error');
+        res.status(500).send({message: error});
     }
 };
 
 const generateDummyBirds = async (req, res) => {
-
     try {
         const birds = [];
         const birdImages = [
@@ -204,6 +215,7 @@ const generateDummyBirds = async (req, res) => {
 
 module.exports = {
     getAllBirds,
+    getBirdsWithAvailableBuyState,
     getBirdsWithPendingBuyState,
     getBirdById,
     createBird,

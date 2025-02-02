@@ -1,7 +1,7 @@
 <template>
     <div id="main-container" class="beautiful-colors">
         <HeaderComponent />
-        <UserData />
+        <UserData :user="user" />
         <div v-if="isAdmin !== null">
             <AdminBirdList v-if="isAdmin" />
             <BirdList v-else />
@@ -26,15 +26,27 @@ export default {
     data() {
         return {
             isAdmin: null,
+            user: {},
         };
     },
+    methods: {
+        isLoggedIn(){
+            if (this.$store.state.token === null) {
+                this.$router.push('/');
+            }
+        },
+
+    },
     async created() {
+        this.isLoggedIn();
+        
         const userId = this.$store.state.userId;
         if (!userId) return;
 
         try {
-            const response = await axios.get(`${process.env.VUE_APP_BACK_END_HOST}/api/users/checkAdminStatus/${userId}`);
-            this.isAdmin = response.data;
+            const response = await axios.get(`${process.env.VUE_APP_BACK_END_HOST}/api/users/getUserById/${userId}`);
+            this.isAdmin = response.data.isAdmin;
+            this.user = response.data;
         } catch (error) {
             console.error("Error fetching admin status:", error);
         }
@@ -48,6 +60,6 @@ export default {
 }
 
 .beautiful-colors {
-    background: linear-gradient(142deg, rgba(23, 173, 162, 1) 0%, rgba(201, 102, 95, 1) 34%, rgba(200, 218, 49, 1) 66%, rgba(74, 255, 0, 1) 100%);
+    background: #03440C;
 }
 </style>

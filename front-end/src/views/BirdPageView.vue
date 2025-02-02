@@ -27,6 +27,7 @@ export default {
     },
     async created() {
         const birdId = this.$route.params.id;
+        console.log(birdId);
         try {
             const res = await axios.get(`${process.env.VUE_APP_BACK_END_HOST}/api/birds/getBirdById/${birdId}`);
             // console.log(res);
@@ -40,17 +41,21 @@ export default {
         buyBird() {
             console.log(`ai cumparat pasarea ${this.bird.name}`)
         },
+        isLoggedIn() {
+            if (this.$store.state.token === null) {
+                this.$router.push('/');
+            }
+        },
     },
+    mounted(){
+        this.isLoggedIn();
+    }
 };
 </script>
 
 <style>
 .beautiful-colors {
-    background: linear-gradient(142deg,
-            rgba(23, 173, 162, 1) 0%,
-            rgba(201, 102, 95, 1) 34%,
-            rgba(200, 218, 49, 1) 66%,
-            rgba(74, 255, 0, 1) 100%);
+    background: #03440C;
     min-height: 100%;
 }
 </style>

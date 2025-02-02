@@ -1,25 +1,27 @@
-import LoginView from '@/views/LoginView.vue'
-import HomepageView from '@/views/HomepageView.vue'
-import profileView from '@/views/ProfileView.vue'
+import Login from '@/views/LoginView.vue'
+import Homepage from '@/views/HomepageView.vue'
+import Profile from '@/views/ProfileView.vue'
 import AddBird from '@/views/AddBirdView.vue'
+import EditBird from '@/views/EditBirdView.vue'
 import BirdPage from '@/views/BirdPageView.vue'
+
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
    {
     path: '/',
     name: 'auth',
-    component: LoginView,
+    component: Login,
   },
   {
     path: '/homepage',
     name: 'homePage',
-    component: HomepageView,
+    component: Homepage,
   },
   {
     path: '/profile',
     name: 'profile',
-    component: profileView,
+    component: Profile,
   },
   {
     path: '/bird/:id',
@@ -30,6 +32,11 @@ const routes = [
     path: '/addBird',
     name: 'AddBird',
     component: AddBird,
+  },
+  {
+    path: '/editBird/:id',
+    name: 'EditBird',
+    component: EditBird,
   }
 
 ]
@@ -40,20 +47,3 @@ const router = createRouter({
 })
 
 export default router
-
-
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: HomeView
-  // },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: function () {
-  //     return import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  //   }
-  // }

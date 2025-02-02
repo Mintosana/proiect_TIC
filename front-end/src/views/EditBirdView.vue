@@ -1,7 +1,7 @@
 <template>
     <div id="main-container" class="beautiful-colors">
         <HeaderComponent />
-        <AddBird />
+        <EditBird />
     </div>
 
 
@@ -9,11 +9,11 @@
 
 <script>
 import HeaderComponent from '../components/general/HeaderComponent.vue';
-import AddBird from '@/components/birdForms/AddBird.vue';
+import EditBird from '@/components/birdForms/EditBird.vue';
 export default {
     components: {
         HeaderComponent,
-        AddBird,
+        EditBird,
     },
     methods: {
         isLoggedInAdmin() {
@@ -26,7 +26,6 @@ export default {
         },
     },
     mounted(){
-        console.log(this.$store.state.isAdmin)
         this.isLoggedInAdmin();
     }
 };
@@ -39,6 +38,6 @@ export default {
 }
 
 .beautiful-colors {
-    background:#03440C;
+    background: #03440C;
 }
 </style>

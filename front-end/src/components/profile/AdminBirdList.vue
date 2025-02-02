@@ -49,11 +49,16 @@ export default {
                 userId:dataArray[0],
                 birdId:dataArray[1],
             });
-            console.log(response);
+            //console.log(response);
             console.log(`Accepted offer for bird with ID: ${dataArray[1]}`);
         },
-        async rejectBird(id) {
-            console.log(`Rejected offer for bird with ID: ${id}`);
+        async rejectBird(dataArray) {
+            const response = await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/users/rejectBirdForUser`,{
+                userId:dataArray[0],
+                birdId:dataArray[1],
+            });
+            //console.log(response);
+            console.log(`Rejected offer for bird with ID: ${dataArray[1]}`);
         },
     },
 };

@@ -1,57 +1,29 @@
 <template>
-    <div class="bird-list">
-      <BirdCard
-        v-for="bird in birds"
-        :key="bird.id"
-        :bird="bird"
-      />
-    </div>
-  </template>
-  
-  <script>
-  import BirdCard from './BirdCard.vue';
-  export default {
-    name: 'BirdList',
-    components: {
-      BirdCard
-    },
-    props: {
-      birds: {
-        type: Array,
-        required: false,
-        default: () => [
-  {
-    id: 1,
-    name: 'Parrot',
-    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Cockatielmale.jpg/300px-Cockatielmale.jpg',
-    species: 'Psittaciformes',
-    age: 2,
-    price: 50,
-    description: 'A beautiful green parrot.',
-    descriptionSnippet: 'A vibrant green parrot, perfect for families.'
+  <v-container>
+    <v-row justify="center" dense class="bird-list-row">
+      <v-col 
+        v-for="bird in birds" 
+        :key="bird.id" 
+        cols="12" sm="6" md="4" lg="3"
+      >
+        <BirdCard :bird="bird" />
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+import BirdCard from './BirdCard.vue';
+export default {
+  name: 'BirdList',
+  components: {
+    BirdCard
   },
-  {
-    id: 2,
-    name: 'Canary',
-    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Cockatielmale.jpg/300px-Cockatielmale.jpg',
-    species: 'Serinus canaria',
-    age: 1,
-    price: 30,
-    description: 'A bright yellow canary with a cheerful song.',
-    descriptionSnippet: 'A bright and cheerful yellow canary.'
-  }
-]
-      }
+  props: {
+    birds: {
+      type: Array,
+      required: true
     }
   }
-  </script>
-  
-  <style scoped>
-  .bird-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    justify-content: center;
-  }
-  </style>
-  
+}
+</script>
