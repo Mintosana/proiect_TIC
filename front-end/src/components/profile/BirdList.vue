@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h2 class="text-center">{{ favouriteBirdArray.length ? "Favourite Birds" : "No Favourite Birds yet..." }}</h2>
+        <h2 class="text-center" style="color:white">{{ favouriteBirdArray.length ? "Favourite Birds" : "No Favourite Birds yet..." }}</h2>
       </v-col>
     </v-row>
 

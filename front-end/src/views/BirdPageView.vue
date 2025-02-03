@@ -27,7 +27,6 @@ export default {
     },
     async created() {
         const birdId = this.$route.params.id;
-        console.log(birdId);
         try {
             const res = await axios.get(`${process.env.VUE_APP_BACK_END_HOST}/api/birds/getBirdById/${birdId}`);
             // console.log(res);
@@ -39,7 +38,7 @@ export default {
     },
     methods: {
         buyBird() {
-            console.log(`ai cumparat pasarea ${this.bird.name}`)
+            console.log(`You reserved bird ${this.bird.name}`)
         },
         isLoggedIn() {
             if (this.$store.state.token === null) {

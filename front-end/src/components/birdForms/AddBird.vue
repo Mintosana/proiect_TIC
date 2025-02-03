@@ -27,7 +27,7 @@
             </v-card-text>
             <v-card-actions class="d-flex justify-center">
                 <v-btn :disabled="!formValid" color="orange" dark @click="submitBird">
-                    Adaugă Pasărea
+                   Add Bird
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -61,10 +61,10 @@ export default {
             try {
                 const response = await axios.post(`${process.env.VUE_APP_BACK_END_HOST}/api/birds/createBird`, this.bird);
                 this.$emit("bird-added", response.data);
-                alert("Pasărea a fost adăugată cu succes!");
+                alert("The bird has been succesfully added!");
             } catch (error) {
-                console.error("Eroare la adăugarea păsării:", error);
-                alert("A apărut o eroare. Te rugăm să încerci din nou.");
+                console.error("Error adding bird:", error);
+                alert("An error has occured, please try again later.");
             }
         },
     },

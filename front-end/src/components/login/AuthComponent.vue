@@ -34,7 +34,7 @@
                     Register
                 </v-btn>
                 <v-btn text style="color: orange;" @click="toggleForm">
-                    {{ isLogin ? "Don't have an account? Register" : "Go to Login" }}
+                    {{ isLogin ? "Wanna join Birb Nation? Register" : "Go to Login" }}
                 </v-btn>
             </v-card-actions>
         </v-card>

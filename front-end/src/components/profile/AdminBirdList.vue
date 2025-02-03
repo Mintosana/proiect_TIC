@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col cols="12">
-                <h2 class="text-center">Reserved Birds</h2>
+                <h2 class="text-center" style="color:white">Reserved Birds</h2>
             </v-col>
         </v-row>
 
@@ -45,19 +45,25 @@ export default {
             }
         },
         async acceptBird(dataArray) {
-            const response = await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/users/boughtBirdForUser`,{
+            try{
+                const response = await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/users/boughtBirdForUser`,{
                 userId:dataArray[0],
                 birdId:dataArray[1],
             });
-            //console.log(response);
+            }catch(error){
+                console.log(`An error has occured while trying to accept bird: ${bird}`)
+            }
             console.log(`Accepted offer for bird with ID: ${dataArray[1]}`);
         },
         async rejectBird(dataArray) {
-            const response = await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/users/rejectBirdForUser`,{
+            try{
+                const response = await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/users/rejectBirdForUser`,{
                 userId:dataArray[0],
                 birdId:dataArray[1],
             });
-            //console.log(response);
+            }catch(error){
+                console.log(`An error has occured while trying to reject bird: ${bird}`)
+            }
             console.log(`Rejected offer for bird with ID: ${dataArray[1]}`);
         },
     },

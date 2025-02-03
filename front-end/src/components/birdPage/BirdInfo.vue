@@ -8,7 +8,7 @@
     <div class="buttons-section">
       <v-btn v-if="isAdmin" color="warning" class="mr-2" @click="editBird">Edit</v-btn>
       <v-btn v-if="isAdmin" color="red" @click="openDeleteDialog">Delete</v-btn>
-      <v-btn v-if="!isAdmin" color="primary" @click="buyBird">Buy Bird</v-btn>
+      <v-btn v-if="!isAdmin" color="primary" @click="buyBird">Reserve</v-btn>
       <v-btn v-if="!isAdmin" color="primary" @click="toggleFavorite">
         <v-icon color="yellow darken-2">
           {{ isFavorited ? "mdi-star" : "mdi-star-outline" }}
@@ -64,7 +64,7 @@ export default {
           `${process.env.VUE_APP_BACK_END_HOST}/api/birds/updateBirdBuyStateById/${this.$route.params.id}`,
           { userId: this.$store.state.userId }
         );
-        console.log(`You bought the bird: ${this.bird.name}`);
+        console.log(`Waiting for approval from admin for bird: ${this.bird.name}`);
 
         await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/users/reserveBirdForUser`, {
           userId: this.$store.state.userId,

@@ -11,7 +11,7 @@ router.post('/addBirdToFavourites', authenticateToken,userController.addBirdToFa
 router.post('/verifyBirdIsFavourite', authenticateToken,userController.verifyBirdIsFavourite);
 router.post('/loginUser', userController.loginUser);
 router.get('/logoutUser', userController.logoutUser);
-router.post('/createUser', authenticateTokenAdmin, userController.createUser);
+router.post('/createUser', userController.createUser);
 router.put('/updateUserById/:id', authenticateTokenAdmin, userController.updateUserById);
 router.put('/reserveBirdForUser', userController.reserveBirdForUser);
 router.put('/boughtBirdForUser', userController.boughtBirdForUser);

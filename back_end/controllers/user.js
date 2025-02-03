@@ -305,15 +305,18 @@ const getFavouriteBirds = async (req, res) => {
       const userData = userDoc.data();
       const pendingBirds = userData.PendingBirds || [];
       const boughtBirds = userData.BoughtBirds || [];
+      const favouriteBirds = userData.favouriteBirds || [];
       if (boughtBirds.includes(birdId)) {
         return res.status(400).json({ error: "Bird is already bought by this user." });
       }
+      const updatedFavouriteBirds = favouriteBirds.filter((id) => id !== birdId); 
       const updatedPendingBirds = pendingBirds.filter((id) => id !== birdId);
       boughtBirds.push(birdId);
 
       await userRef.update({
         PendingBirds: updatedPendingBirds,
         BoughtBirds: boughtBirds,
+        FavouriteBirds : updatedFavouriteBirds,
       });
 
       await birdRef.update({

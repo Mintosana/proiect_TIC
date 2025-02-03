@@ -2,7 +2,7 @@
     <v-container id="outer-container">
         <v-card id="form-container" style="background-color: #246f27; color: white;">
             <v-card-title class="text-h5 text-center" style="color: orange;">
-                Modifica Pasarea {{ this.bird.name }}
+                Modify Bird - {{ this.bird.name }}
             </v-card-title>
             <v-card-text>
                 <v-form ref="birdForm" v-model="formValid">
@@ -27,7 +27,7 @@
             </v-card-text>
             <v-card-actions class="d-flex justify-center">
                 <v-btn :disabled="!formValid" color="orange" dark @click="editBird">
-                    Modifica Pasarea
+                    Modify Bird
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -68,7 +68,7 @@ export default {
         async editBird() {
             try {
                 await axios.put(`${process.env.VUE_APP_BACK_END_HOST}/api/birds/updateBirdById/${this.$route.params.id}`, this.bird);
-                alert("Pasărea a fost modificata cu succes!");
+                alert("The bird has been succesfully modified!!");
             } catch (error) {
                 console.error("Eroare la actualizarea pasarii:", error);
                 alert("A aparut o eroare. Te rugăm sa incerci din nou.");
